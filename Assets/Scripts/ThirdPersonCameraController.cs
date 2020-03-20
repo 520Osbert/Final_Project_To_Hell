@@ -5,17 +5,23 @@ using UnityEngine;
 public class ThirdPersonCameraController : MonoBehaviour {
 
     public Transform PlayerTransform;
+
+    private Vector3 camOffset;
+
+    [Range(0.01f, 1.0f)]
+    public float SmoothFactor = 0.5f;
+
     void Start()
     {
-        transform.position = PlayerTransform.position;
-        transform.position = transform.position + new Vector3(0, 40, -40);
+        camOffset = transform.position - PlayerTransform.position;
     }
 
 
     void LateUpdate()
     {
-        transform.position = PlayerTransform.position;
-        transform.position = transform.position + new Vector3(0,40,-40);
+        Vector3 newPos = PlayerTransform.position + camOffset;
+
+        transform.position = Vector3.Slerp(transform.position, newPos, SmoothFactor);
     }
 
 }

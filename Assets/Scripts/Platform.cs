@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Platform : MonoBehaviour {
-    public Layer layer;
 
-    void Start () {
-        layer = GameObject.Find("Layer Controller").GetComponent<Layer>();
-	}
+    public Transform PlayerTransform;
 	
-	void Update () {
-
-        if (transform.position.y >= 400)
-            transform.Translate(new Vector3(Random.Range(layer.minX, layer.maxX), -400, Random.Range(layer.minZ, layer.maxZ)));
-        transform.Translate(0, layer.speed * Time.deltaTime, 0);
+	void LateUpdate () {
+        PlayerTransform = GameObject.Find("Player").GetComponent<Transform>();
+        //Debug.Log(PlayerTransform.position);
+        if (this.gameObject.transform.position.y >= PlayerTransform.position.y + 100)
+        {
+            Debug.Log("destroyed");
+            Destroy(this.gameObject);
+        }
 	}
 }
